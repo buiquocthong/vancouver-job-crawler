@@ -1,0 +1,3 @@
+# Vancouver Job Crawler — Dependencies
+python-jobspy>=0.1.0
+pandas>=2.0.0
