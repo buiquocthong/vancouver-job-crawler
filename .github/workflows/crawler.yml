@@ -1,0 +1,33 @@
+name: Vancouver Job Crawler
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # 7h sáng VN
+  workflow_dispatch:       # cho phép chạy tay
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout code
+        uses: actions/checkout@v3
+
+      - name: 2. Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 3. Install dependencies
+        run: |
+          pip install python-jobspy pandas
+
+      - name: 4. Run crawler
+        run: |
+          python vancouver_job_crawler.py
+
+      - name: 5. Upload CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: vancouver-jobs
+          path: vancouver_jobs_*.csv
